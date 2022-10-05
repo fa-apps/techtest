@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+  php-apache:
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: php8_0_2_apache
+    depends_on: 
+      - mysql
+    volumes:
+      - "./php:/var/www/html/"
+    ports:
+      - "8000:80"
+  mysql:
+    container_name: mysql_
+    image: mysql
+    command: "--innodb_use_native_aio=0"
+    volumes:
+      - "./db_data:/var/lib/mysql"
+      - "./mysqlconf:/etc/mysql/conf.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: docker_database
+    ports:
+      - "33066:3306"
+  weather:
+    build: ./weather
+    container_name: weather_c
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./weather:/weather
+      - ./weather/node_modules
+    stdin_open : true
+    tty: true
