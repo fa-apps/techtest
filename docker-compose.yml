@@ -2,13 +2,13 @@ version: '3.3'
 services:
   php-apache:
     build: 
-      context: ./php
+      context: ./api
       dockerfile: Dockerfile
-    container_name: php8_0_2_apache
+    container_name: php8_0_2_apache_c
     depends_on: 
       - mysql
     volumes:
-      - "./php:/var/www/html/"
+      - "./api:/var/www/html/"
     ports:
       - "8000:80"
   mysql:
@@ -20,16 +20,16 @@ services:
       - "./mysqlconf:/etc/mysql/conf.d"
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-      MYSQL_DATABASE: docker_database
+      MYSQL_DATABASE: weather_city
     ports:
       - "33066:3306"
   weather:
-    build: ./weather
-    container_name: weather_c
+    build: ./app
+    container_name: app_c
     ports: 
       - "3000:3000"
     volumes:
-      - ./weather:/weather
-      - ./weather/node_modules
+      - ./app:/app
+      - ./app/node_modules
     stdin_open : true
     tty: true

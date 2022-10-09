@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-WORKDIR /weather
+WORKDIR /app
 
 COPY package.json .
 
