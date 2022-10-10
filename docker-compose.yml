@@ -14,13 +14,14 @@ services:
   mysql:
     container_name: mysql_
     image: mysql
-    command: "--innodb_use_native_aio=0"
+    command: "--innodb_use_native_aio=0" 
     volumes:
       - "./db_data:/var/lib/mysql"
       - "./mysqlconf:/etc/mysql/conf.d"
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-      MYSQL_DATABASE: docker_database
+      MYSQL_DATABASE: weather_city
+      MYSQL_ROOT_HOST: '%' 
     ports:
       - "33066:3306"
   weather:
